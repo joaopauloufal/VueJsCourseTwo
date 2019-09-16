@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>School of Net - Vue Components</title>
+    </head>
+    <body>
+        <div id="app">
+            <contar></contar>
+            <nome></nome>
+        </div>
+
+         <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+        <script>
+
+            Vue.component('contar',{
+                template : '<h1>Olá Mundo!!</h1>'
+
+            });
+
+            Vue.component('nome',{
+                template : `
+                <div id="nome">
+                    Luiz Carlos
+                    <p>sdasdas</p>
+                    <h1>asderr</h1>
+                </div>
+                `
+
+            });
+
+            new Vue({
+
+                el: "#app",
+
+            });
+
+        </script>
+    </body>
+</html>
