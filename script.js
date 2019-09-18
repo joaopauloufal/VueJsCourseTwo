@@ -2,6 +2,7 @@ Vue.filter('ucwords', function(valor){
     return valor.charAt(0).toUpperCase() + valor.slice(1);
 })
 
+
 Vue.component('titulo', {
 
     template: `
