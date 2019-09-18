@@ -1,3 +1,7 @@
+Vue.filter('ucwords', function(valor){
+    return valor.charAt(0).toUpperCase() + valor.slice(1);
+})
+
 Vue.component('titulo', {
 
     template: `
@@ -17,7 +21,7 @@ Vue.component('clube', {
         </div>
     `,
 
-    
+
 
 });
 
@@ -128,9 +132,6 @@ new Vue({
     filters : {
         saldo(time){
             return time.gm - time.gs;
-        },
-        ucwords(valor){
-            return valor.charAt(0).toUpperCase() + valor.slice(1);
         }
     }
 
