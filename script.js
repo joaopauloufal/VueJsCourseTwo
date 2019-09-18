@@ -8,6 +8,19 @@ Vue.component('titulo', {
 
 });
 
+Vue.component('clube', {
+    props : ['time'],
+    template: `
+        <div>
+            <img :src="time.escudo" alt="" class="escudo">
+            {{time.nome | ucwords}}
+        </div>
+    `,
+
+    
+
+});
+
 new Vue({   
 
     el: "#app",
