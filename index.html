@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>School of Net - Vue.js - Campeonato Brasileiro 2018</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style type="text/css">
+            .escudo {
+                width: 30px;
+                height: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" class="container">
+
+            <titulo></titulo>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" @click="criarNovoJogo">Novo Jogo</button>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12" v-show="visao != 'tabela'">
+                    <form class="form-inline">
+                        <input type="text" class="form-control col-md-1" v-model="novoJogo.casa.gols">
+                        {{novoJogo.casa.time ? novoJogo.casa.time.nome : ''}}
+                        <img :src="novoJogo.casa.time ? novoJogo.casa.time.escudo: ''" alt="" class="escudo">
+                        <span>X</span>
+                        <img :src="novoJogo.fora.time ? novoJogo.fora.time.escudo: ''" alt="" class="escudo">
+                        <input type="text" class="form-control col-md-1" v-model="novoJogo.fora.gols">
+                        {{novoJogo.fora.time ? novoJogo.fora.time.nome : ''}}
+                        <button type="button" class="btn btn-primary" @click="fimJogo">Fim de Jogo</button>
+                        
+                    </form>
+                </div>
+                <div class="col-md-12" v-show="visao === 'tabela'">
+                    <input type="text" class="form-control" v-model="busca">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th v-for="(coluna, indice) in ordem.colunas">
+                                    <a href="#" @click.prevent="ordenar(indice)">{{coluna | ucwords}}</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="time in timesFiltrados">
+                                <td>
+                                    <img :src="time.escudo" alt="" class="escudo">
+                                    {{time.nome | ucwords}}                           
+                                </td>
+                                <td>{{time.pontos}}</td>
+                                <td>{{time.gm}}</td>
+                                <td>{{time.gs}}</td>
+                                <td>{{time.saldo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>Times classificados para a libertadores</h3>
+                    <ul>
+                        <li v-for="time in timesLibertadores">
+                            <td>
+                                <img :src="time.escudo" alt="" class="escudo">
+                                {{time.nome | ucwords}}                           
+                            </td>
+                        </li>
+                    </ul>
+                    <h3>Times rebaixados</h3>
+                    <ul>
+                        <li v-for="time in timesRebaixados">
+                            <td>
+                                <img :src="time.escudo" alt="" class="escudo">
+                                {{time.nome | ucwords}}                           
+                            </td>
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+
+
+            
+
+        </div>
+
+         <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+        <script src="time.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
+
+<!--  Data binding Programação --- HTML -->
+<!--  One way data binding -->
