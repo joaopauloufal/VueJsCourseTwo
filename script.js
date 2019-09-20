@@ -77,16 +77,77 @@ Vue.component('clubes-rebaixados', {
 
 });
 
+Vue.component('tabela-clubes', {
+    props : ['times'],
+    data(){
+
+        return {
+            busca : '',
+            ordem : {
+                colunas : ['pontos', 'gm', 'gs', 'saldo'],
+                orientacao : ['desc', 'desc', 'asc', 'desc']
+            },
+        }
+
+    },
+    template: `
+        <div>
+            <input type="text" class="form-control" v-model="busca">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th v-for="(coluna, indice) in ordem.colunas">
+                            <a href="#" @click.prevent="ordenar(indice)">{{coluna | ucwords}}</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(time, indice) in timesFiltrados" :class="{'table-success':indice < 6}" :style="{'font-size': indice < 6 ? '17px' : '15px'}">
+                        <td>
+                        <clube :time="time"></clube>                           
+                        </td>
+                        <td>{{time.pontos}}</td>
+                        <td>{{time.gm}}</td>
+                        <td>{{time.gs}}</td>
+                        <td>{{time.saldo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <clubes-libertadores :times="timesOrdered"></clubes-libertadores>
+            <clubes-rebaixados :times="timesOrdered"></clubes-rebaixados>
+        </div>
+    `,
+
+    computed : {
+
+
+        timesFiltrados(){
+            console.log('ordenou', this.ordem);
+            var times = _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao);
+            var self = this;
+            return _.filter(times, function(time){
+                var busca = self.busca.toLowerCase();
+                return time.nome.toLowerCase().indexOf(busca) >= 0;
+            });
+        },
+
+        timesOrdered(){
+
+           return _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao);
+
+        }
+
+    },
+
+
+});
+
 new Vue({   
 
     el: "#app",
     data: {
-        gols: '3',
-        busca : '',
-        ordem : {
-            colunas : ['pontos', 'gm', 'gs', 'saldo'],
-            orientacao : ['desc', 'desc', 'asc', 'desc']
-        },
+
         times : [
             new Time('palmeiras', 'assets/palmeiras_60x60.png'),
             new Time('Internacional', 'assets/internacional_60x60.png'),
@@ -123,34 +184,8 @@ new Vue({
         visao : 'tabela',
     },
 
-    computed : {
-
-
-        timesFiltrados(){
-            console.log('ordenou', this.ordem);
-            var times = _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao);
-            var self = this;
-            return _.filter(times, function(time){
-                var busca = self.busca.toLowerCase();
-                return time.nome.toLowerCase().indexOf(busca) >= 0;
-            });
-        },
-
-        timesOrdered(){
-
-           return _.orderBy(this.times, this.ordem.colunas, this.ordem.orientacao);
-
-        }
-
-    },
-
     methods : {
-        showAlert(){
-            alert('Fim de Jogo!');
-        },
-        pegarValor($event){
-            console.log($event);
-        },
+        
         criarNovoJogo(){
 
             var indiceCasa = Math.floor(Math.random() * 20);
