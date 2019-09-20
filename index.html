@@ -24,7 +24,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12" v-show="visao != 'tabela'">
-                    <novo-jogo :time-casa="timeCasa" :time-fora="timeFora"></novo-jogo>
+                    <novo-jogo :time-casa="timeCasa" :time-fora="timeFora" @fim-jogo="showTabela($event)"></novo-jogo>
                 </div>
                 <div class="col-md-12" v-show="visao === 'tabela'">
                     <tabela-clubes :times="times"></tabela-clubes>
